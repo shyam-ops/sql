@@ -1,0 +1,8 @@
+create database
+create table
+insert
+select
+where
+top
+distinct
+
