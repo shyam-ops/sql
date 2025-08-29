@@ -23,3 +23,4 @@ alter table employee add constraint pri_id Primary key nonclustered(id)
 alter table employee drop constraint pri_id
 
 drop index employee.inx_name
+
