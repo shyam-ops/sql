@@ -29,3 +29,4 @@ select *,dense_rank() over(order by salary desc) as salary_rank from employee
 
 select id,name,salary,rank() over(order by salary desc) as sal_rank,
 DENSE_RANK() over (order by salary desc) as sal_dense_rank from employee
+

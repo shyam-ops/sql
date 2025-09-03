@@ -24,3 +24,4 @@ alter table employee drop constraint pri_id
 
 drop index employee.inx_name
 
+select top(5) Salary from Employee
