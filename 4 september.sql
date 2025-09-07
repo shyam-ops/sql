@@ -38,3 +38,8 @@ select CEILING(25.25)
 select ceiling(25.89)
 
 select ceiling(-10.01)
+
+--lead lag
+select name,lead(name) over (order by name) as lead_quo from employee
+
+select name, lag(name) over (order by name) as lead_quo from employee

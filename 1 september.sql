@@ -35,7 +35,7 @@ instead of update
 as begin
 print 'you do not have permission to update data'
 end
-
+drop trigger trig_instead
 update employee set city = 'pune' where id = 1
 
 alter table employee disable trigger trig_instead
@@ -49,7 +49,7 @@ instead of delete, insert
 as begin
 print 'you cannot delet or inserrt any command'
 end
-
+drop trigger delete_insert
 delete from employee where id = 5
 
 drop trigger detele_insert

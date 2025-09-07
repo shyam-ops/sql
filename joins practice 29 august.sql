@@ -88,3 +88,35 @@ od.p_id = p.p_id where p.p_name in ('Laptop' , 'Mobile')
 
 --10)
 
+
+--update practice
+CREATE TABLE j_customer (
+    c_id INT PRIMARY KEY,
+    c_name VARCHAR(50),
+    city VARCHAR(50),
+    state VARCHAR(50),
+    customer_type VARCHAR(20)
+);
+
+INSERT INTO j_customer VALUES
+(1, 'Shyam', 'Nagpur', 'Maharashtra', NULL),
+(2, 'Abhishek', 'Mumbai', 'Maharashtra', NULL),
+(3, 'Kunal', 'Pune', 'Maharashtra', NULL),
+(4, 'Sujit', 'Delhi', 'Delhi', NULL),
+(5, 'Rohan', 'Nagpur', 'Maharashtra', NULL);
+
+CREATE TABLE j_orders (
+    o_id INT PRIMARY KEY,
+    c_id INT,
+    order_date DATE,
+    FOREIGN KEY (c_id) REFERENCES j_customer(c_id)
+);
+
+INSERT INTO j_orders VALUES
+(101, 1, '2025-08-01'),
+(102, 2, '2025-08-02'),
+(103, 3, '2025-08-03'),
+(104, 1, '2025-08-04'),
+(105, 5, '2025-08-05');
+
+

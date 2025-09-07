@@ -24,11 +24,13 @@ insert into vi_male values (30,'Prashant',45,'Male',78000,'HR','Ambala','India')
 select * from vi_male
 select * from employee
 
-delete from employee where name = 'Joseph'
+delete from employee where name = 'Leonado'
 
 select * from employee
 
-insert into vi_male values (31, 'Neeti', 40, 'Female', 45000, 'Marketing', 
+insert into vi_male values (40, 'Nuti', 44, 'Female', 45000, 'Marketing', 
 'Chennai', 'India')
 
 select * from vi_male
+
+delete from vi_male where name = 'Mike'
