@@ -11,12 +11,17 @@ select * from employee where age = 45
 drop index employee.in_city
 drop index employee.inx_age
 
+--cluster index
 alter table employee alter column id int not null
 alter table employee add constraint pri_id Primary key(id)
 
 alter table employee drop constraint pri_id
 
 create clustered index inx_name on employee(name)
+
+create clustered index inx_id on employee(id)
+
+drop  index employee.inx_name
 
 alter table employee add constraint pri_id Primary key nonclustered(id)
 
