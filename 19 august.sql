@@ -1,4 +1,4 @@
-use microsoft
++use microsoft
 
 select * from employee
 

@@ -67,7 +67,7 @@ select state from location  group by state order by  state
 --12
 select * from fact
 
-select productId, budget_margin from fact group by productId having avg(budget_margin)> 100 
+select avg(budget_margin) from fact where budget_margin > 100
 
 --13
 select * from fact
