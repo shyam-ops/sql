@@ -47,3 +47,15 @@ insert into customers values
 (3,'Rajesh','rajesh@gmail.com','Nagpur'),
 (4,NULL,'anita@yahoo.com',NULL),
 (5,'Vivek','vivek@gmail.com',NULL)
+
+select * from students where age = NULL or city = 'Nagpur'
+
+select distinct category from products
+
+select * from employees where salary > 35000 or department = 'Finance'
+
+select top(3) * from orders order by order_date desc
+
+select * from customers where email like '%gmail.com'
+
+select distinct department from employees where salary = NULL
