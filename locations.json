@@ -1,123 +1,739 @@
+
+User attachment
+
+BottomSheetModal.jsx
+Code
+one i got location i want to do this things
+i want to learn it not just copy paste things
+create a searchbar using text input, render location data , bread crumbs All State > Selected State name > selected city name which are pressable. and it should be linked. 
+
+clicking on state renders city list of that state, clicking city renders location
+
+and we cant put any value empty
+if i selected state and not city so it should not be empty. means the locations should be seleted completely else keep the old value
+
+how to proceed it
+
+teach me step by step
+
+dont use high react functions. help me in logic building with basic react logic
+We'll build this step by step using basic React Native logic: useState, useEffect, TextInput, .find(), .filter(), .map(), and simple functions. No advanced hooks or complicated abstractions.
+
+I've also looked at your uploaded BottomSheetModal.jsx. You already have a reusable bottom sheet that accepts visible, onClose, title, and children. We'll keep that component and build the location selector inside it. 
+BottomSheetModal.jsx
+
+Step 1 — Understand the behavior before coding
+Your location data has three levels:
+
+State
+
+Karnataka
+
+City
+
+Bangalore · Mysore · Mangalore
+
+Location
+
+Indiranagar · Koramangala · Whitefield
+
+The screen should behave like this:
+
+Show the list of states.
+
+Tap a state to show only its cities.
+
+Tap a city to show only its locations.
+
+Tap a location to select it.
+
+Use the breadcrumbs to go back to any level.
+
+Search by state, city, or location name.
+
+If the user closes the modal without completing a new selection, preserve the previously selected location.
+
+Step 2 — Separate browsing from the actual selection
+This is the most important part of the logic.
+
+You need two kinds of state: the user's current browsing level and the confirmed location.
+
+State variable
+
+What it means
+
+states
+
+Data received from the API or JSON file
+
+selectedState
+
+State currently being browsed
+
+selectedCity
+
+City currently being browsed
+
+selectedLocation
+
+The final, confirmed location
+
+searchText
+
+What the user types into the search bar
+
+Why separate them?
+
+Imagine the user has already selected:
+
+Karnataka → Bangalore → Koramangala
+
+They open the modal and browse Karnataka → Mysore, but then close it without choosing a location.
+
+If you immediately overwrite the confirmed selection when they tap Mysore, your previous location is lost. Instead, browsing changes only the browsing state; the confirmed selection changes only when a location is tapped.
+
+Step 3 — Create the basic state variables
+Create LocationSelector.jsx. First, import the React Native components you need:
+
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
+
+Now create the component and its state variables:
+
+const LocationSelector = ({ states, onSelectLocation }) => {
+  const [selectedState, setSelectedState] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(null);
+  const [searchText, setSearchText] = useState('');
+
+  return (
+    <View style={{ flex: 1 }}>
+      {/* We will build the UI here */}
+    </View>
+  );
+};
+
+export default LocationSelector;
+
+Let's understand these variables.
+
+selectedState starts as null because the user hasn't opened a state yet.
+
+selectedCity starts as null because the user hasn't opened a city yet.
+
+searchText stores whatever the user types.
+
+Important: These variables control navigation inside the modal. They do not change the location already saved by the parent screen.
+
+Step 4 — Decide which list to display
+Think through the problem first:
+
+If no state is selected, display states.
+
+If a state is selected but no city is selected, display cities.
+
+If both state and city are selected, display locations.
+
+We can express this with three simple conditions.
+
+const cityList =
+  states.find((item) => item.state_id === selectedState?.state_id)
+    ?.cities ?? [];
+
+const locationList =
+  cityList.find((item) => item.city_id === selectedCity?.city_id)
+    ?.locations ?? [];
+
+These lines find the children of the selected state and city.
+
+Now decide which list should be displayed:
+
+let displayList = [];
+
+if (!selectedState) {
+  displayList = states;
+} else if (!selectedCity) {
+  displayList = cityList;
+} else {
+  displayList = locationList;
+}
+
+Notice that we don't need a separate level state variable. We can determine the current level from the selections we already have.
+
+Step 5 — Render the list
+Use FlatList to display whichever list displayList contains.
+
+<FlatList
+  data={displayList}
+  keyExtractor={(item) =>
+    String(
+      item.state_id ??
+      item.city_id ??
+      item.location_id
+    )
+  }
+  renderItem={({ item }) => {
+    const name =
+      item.name ??
+      item.city_name ??
+      item.location_name;
+
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          if (!selectedState) {
+            setSelectedState(item);
+          } else if (!selectedCity) {
+            setSelectedCity(item);
+          } else {
+            onSelectLocation(item);
+          }
+        }}
+        style={styles.locationCard}
+      >
+        <Text>{name}</Text>
+      </TouchableOpacity>
+    );
+  }}
+/>
+
+Why does this work?
+The onPress function checks what the user is currently browsing.
+
+First tap: selectedState is empty, so the tapped item becomes the selected state.
+
+Second tap: a state exists but no city exists, so the tapped item becomes the selected city.
+
+Third tap: both exist, so the tapped item is the final location.
+
+One thing to remember: onSelectLocation(item) is called only at the last level. We will connect it to your parent screen in a later step.
+
+Step 6 — Add the clickable breadcrumbs
+The breadcrumb tells users where they are and allows them to navigate backwards.
+
+For example:
+
+All states
+
+Karnataka
+
+Bangalore
+
+Tap All states to go back to states, or Karnataka to go back to its cities.
+
+Render it with TouchableOpacity:
+
+<View style={styles.breadcrumbs}>
+  <TouchableOpacity
+    onPress={() => {
+      setSelectedState(null);
+      setSelectedCity(null);
+    }}
+  >
+    <Text>All states</Text>
+  </TouchableOpacity>
+
+  {selectedState && (
+    <>
+      <Text> › </Text>
+
+      <TouchableOpacity
+        onPress={() => {
+          setSelectedCity(null);
+        }}
+      >
+        <Text>{selectedState.name}</Text>
+      </TouchableOpacity>
+    </>
+  )}
+
+  {selectedCity && (
+    <>
+      <Text> › </Text>
+      <Text>{selectedCity.city_name}</Text>
+    </>
+  )}
+</View>
+
+The important logic is:
+
+All states: clear both browsing selections.
+
+State: clear only the city selection.
+
+City: display it as the current breadcrumb.
+
+Because the displayed list depends on these values, React automatically renders the appropriate list after you tap a breadcrumb.
+
+Step 7 — Add the search bar
+This is where we need to think a little more carefully.
+
+If the user types Karnataka, the result should be the state. If they type Bangalore, the result should identify the city. If they type Koramangala, the result should identify the location.
+
+A simple .filter() over the currently displayed list is not enough because the search needs to look through all three levels.
+
+Start with the input:
+
+<TextInput
+  placeholder="Search state, city or location"
+  placeholderTextColor="#777777"
+  value={searchText}
+  onChangeText={setSearchText}
+  style={styles.searchBar}
+/>
+
+Then, before writing the filter, ask yourself:
+
+If searchText is Koramangala, how can we find that location and also retrieve its parent city and state?
+
+The approach is to loop through the states, then their cities, then their locations. When a name matches, keep the matching result together with its parent information. This also allows a search result to open the correct state or city when tapped.
+
+We'll implement that after the basic list and breadcrumbs work.
+
+Step 8 — Prevent incomplete selections from replacing the old location
+This is the rule that protects your existing selection.
+
+Keep the confirmed location in the parent screen:
+
+const [confirmedLocation, setConfirmedLocation] = useState(null);
+
+When the user taps a final location:
+
+const handleLocationSelect = (location) => {
+  setConfirmedLocation(location);
+  setModalVisible(false);
+};
+
+Pass the handler to the selector:
+
+<LocationSelector
+  states={states}
+  onSelectLocation={handleLocationSelect}
+/>
+
+Do not update confirmedLocation when the user taps a state or city. Do not clear it when the user navigates backwards or closes the modal.
+
+This means that if the user opens the modal, explores another state, and closes the modal without choosing a final location, the previously confirmed selection stays intact.
+
+You should also make sure the final selection contains a valid location_id before confirming it.
+
+Your learning exercise
+Don't implement everything at once. Start by completing these three tasks:
+
+
+Display the state list from the API data
+
+Tap a state to display its cities, then a city to display its locations
+
+Add clickable breadcrumbs to navigate back
+0 of 3 completed
+
+For now, don't worry about styling or the exact screenshot. First make the navigation work correctly; then we'll add search results, selected-card styling, and the connection to your existing BottomSheetModal.
+
+one correction
+in search bar. if we type karnataka show all locations in karnataka, if i type bengaluru, show all locations in bengaluru like that and if i search specific location show that only
+Got it. The search should return locations matching anywhere in the hierarchy, not just items at the current browsing level.
+
+For example, if the user searches Karnataka, show every location in every city within Karnataka. If they search Bengaluru, show every location in that city. If they search Koramangala, show only that matching location.
+
+Step 1: Understand the search logic
+Using your API structure:
+
+Search text
+
+Results
+
+Karnataka
+
+All locations under Karnataka
+
+Bengaluru
+
+All locations under Bengaluru
+
+Mangalore
+
+All locations under Mangalore
+
+Koramangala
+
+Only Koramangala
+
+xyz
+
+No results
+
+Step 2: Build a list of matching locations
+The easiest beginner-friendly approach is to loop through the states, cities, and locations using forEach().
+
+const getSearchResults = () => {
+  let results = [];
+
+  states.forEach((state) => {
+    state.cities.forEach((city) => {
+      city.locations.forEach((location) => {
+        const search = searchText.toLowerCase().trim();
+
+        if (
+          state.name.toLowerCase().includes(search) ||
+          city.city_name.toLowerCase().includes(search) ||
+          location.location_name.toLowerCase().includes(search)
+        ) {
+          results.push({
+            ...location,
+            state_name: state.name,
+            city_name: city.city_name,
+          });
+        }
+      });
+    });
+  });
+
+  return results;
+};
+
+How does this work?
+Suppose the search text is Karnataka.
+
+The loop checks the state name.
+
+It checks each city inside that state.
+
+It checks each location inside each city.
+
+Since every location belongs to Karnataka, every location is added to results.
+
+If the search is Koramangala, only the location whose name matches is added.
+
+Step 3: Display the results
+Create the search results based on whether the user has entered text:
+
+let displayList = [];
+
+if (searchText.trim() !== '') {
+  displayList = getSearchResults();
+} else if (!selectedState) {
+  displayList = states;
+} else if (!selectedCity) {
+  displayList = cityList;
+} else {
+  displayList = locationList;
+}
+
+This preserves your existing browsing behavior when the search bar is empty.
+
+One important detail: When search results are displayed, each result needs its state_name and city_name so the UI can show the correct parent city and state below the location name.
+
+Your next step is to connect a search result's onPress to the correct state and city, rather than treating every result as if it were already at the location level.
+
+Statrt from start
+of location fetching
+Let's start from the very beginning and build your React Native location selector step by step. We'll learn the logic as we go, rather than copying a complete component.
+
+We'll use your existing BottomSheetModal.jsx, your /booking/locations API response, and basic React Native concepts.
+
+What we are building
+1. Fetch locations
+
+Get the API response using Axios and store it in state.
+
+2. Display states, cities and locations
+
+Navigate through the nested data using simple conditions.
+
+3. Add search
+
+Searching Karnataka or Bengaluru displays all locations within it; searching a specific location displays that location.
+
+4. Add breadcrumbs and selection
+
+Make breadcrumbs clickable and preserve the old selection until a new location is fully selected.
+
+Step 1 — Fetch the location data
+Your API response has this structure:
+
 {
-  "location": [
+  location: [
     {
-      "state_id": 1,
-      "name": "Karnataka",
+      state_id: 1,
+      name: 'Karnataka',
+      cities: [
+        {
+          city_id: 1,
+          city_name: 'Bangalore',
+          locations: [
+            {
+              location_id: 1,
+              location_name: 'Indiranagar'
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+The important thing is that the data is nested:
+
+response.data.location → states
+
+state.cities → cities inside a state
+
+city.locations → locations inside a city
+
+We need to fetch the data once when the screen mounts, then store it in React state.
+
+1.1 Create the state variable
+Inside your LocationSelector.jsx component, write:
+
+const [states, setStates] = useState([]);
+
+What does this mean?
+
+states stores the data we receive.
+
+setStates() updates that data.
+
+
+is the initial value because the API data hasn't loaded yet.
+Why an array? Because location in your API response is an array containing the states.
+
+1.2 Fetch the data using Axios
+First, make sure Axios is installed:
+
+npm install axios
+
+Then import it:
+
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { View, Text } from 'react-native';
+
+Inside the component, add this function and effect:
+
+const [states, setStates] = useState([]);
+
+const getLocations = async () => {
+  try {
+    const response = await axios.get(
+      'YOUR_GITHUB_RAW_JSON_URL'
+    );
+
+    setStates(response.data.location);
+
+    console.log('States:', response.data.location);
+  } catch (error) {
+    console.log('Location fetch failed:', error.message);
+  }
+};
+
+useEffect(() => {
+  getLocations();
+}, []);
+
+Replace YOUR_GITHUB_RAW_JSON_URL with your actual GitHub Raw URL. Since you want to test outside office Wi-Fi, use that URL rather than the office-only API endpoint.
+
+1.3 Understand the execution order
+React creates the component, and states initially contains [].
+
+useEffect runs after the component renders.
+
+getLocations() sends the Axios GET request.
+
+await waits for the response.
+
+setStates(response.data.location) stores the array and triggers a re-render.
+
+The empty dependency array [] means the effect runs when the component mounts, rather than after every render. In React development mode, Strict Mode can cause an additional effect run.
+
+1.4 Test before moving forward
+Temporarily add this inside your component's return:
+
+<View>
+  <Text>States loaded: {states.length}</Text>
+
+  {states.map((state) => (
+    <Text key={state.state_id}>
+      {state.name}
+    </Text>
+  ))}
+</View>
+
+If the request succeeds with your sample data, you should see:
+
+States loaded: 1
+
+Karnataka
+
+This test confirms that fetching and storing the data works. We haven't built the city or location lists yet.
+
+Your task now: Implement this step and check whether Karnataka appears on the screen. Once it works, we'll move to Step 2: displaying the state list and handling a state tap.
+
+how to upload the location file on githuv. give data for it
+
+add 4-5 states in location.jsx
+
+I've added 5 more sample states to your existing locations.json, keeping Karnataka and its original data unchanged.
+
+Download updated locations.json
+
+The file now contains 6 states in total:
+
+State
+
+Sample cities
+
+Karnataka
+
+Bangalore, Mysore, Mangalore, Manipal, Udupi
+
+Maharashtra
+
+Mumbai, Pune
+
+Tamil Nadu
+
+Chennai, Coimbatore
+
+Kerala
+
+Kochi, Thiruvananthapuram
+
+Telangana
+
+Hyderabad, Warangal
+
+Goa
+
+Panaji, Margao
+
+Each added city has two sample locations, with unique IDs and the same nested structure as your original API response.
+
+Next steps:
+
+Replace your existing GitHub locations.json with this updated file.
+
+Commit the changes.
+
+Fetch the Raw URL again in your React Native app.
+
+This will give you more data to practise state selection, city navigation, breadcrumbs, and searching across the entire location hierarchy.
+
+Note: These are mock locations for UI testing, not verified records from your office API.
+
+
+locations.json
+Code
+
+
+
+              "location_id": 402,
+              "location_name": "Fort Kochi",
+              "is_selected": false
+            }
+          ]
+        },
+        {
+          "city_id": 42,
+          "city_name": "Thiruvananthapuram",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 403,
+              "location_name": "Kazhakkoottam",
+              "is_selected": false
+            },
+            {
+              "location_id": 404,
+              "location_name": "Pattom",
+              "is_selected": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "state_id": 5,
+      "name": "Telangana",
       "is_selected": false,
       "cities": [
         {
-          "city_id": 1,
-          "city_name": "Bangalore",
+          "city_id": 51,
+          "city_name": "Hyderabad",
           "is_selected": false,
           "locations": [
             {
-              "location_id": 1,
-              "location_name": "Indiranagar",
+              "location_id": 501,
+              "location_name": "Madhapur",
               "is_selected": false
             },
             {
-              "location_id": 13,
-              "location_name": "KFC signal",
-              "is_selected": false
-            },
-            {
-              "location_id": 2,
-              "location_name": "Koramangala",
-              "is_selected": false
-            },
-            {
-              "location_id": 12,
-              "location_name": "sharon",
-              "is_selected": false
-            },
-            {
-              "location_id": 11,
-              "location_name": "Testing",
+              "location_id": 502,
+              "location_name": "Gachibowli",
               "is_selected": false
             }
           ]
         },
         {
-          "city_id": 10,
-          "city_name": "Bangalore Airport",
+          "city_id": 52,
+          "city_name": "Warangal",
           "is_selected": false,
           "locations": [
             {
-              "location_id": 16,
-              "location_name": "Hawai Adda",
+              "location_id": 503,
+              "location_name": "Hanamkonda",
+              "is_selected": false
+            },
+            {
+              "location_id": 504,
+              "location_name": "Kazipet",
+              "is_selected": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "state_id": 6,
+      "name": "Goa",
+      "is_selected": false,
+      "cities": [
+        {
+          "city_id": 61,
+          "city_name": "Panaji",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 601,
+              "location_name": "Miramar",
+              "is_selected": false
+            },
+            {
+              "location_id": 602,
+              "location_name": "Dona Paula",
               "is_selected": false
             }
           ]
         },
         {
-          "city_id": 3,
-          "city_name": "Mangalore",
+          "city_id": 62,
+          "city_name": "Margao",
           "is_selected": false,
           "locations": [
             {
-              "location_id": 15,
-              "location_name": "Kempegowda 2",
+              "location_id": 603,
+              "location_name": "Colva",
               "is_selected": false
             },
             {
-              "location_id": 5,
-              "location_name": "Mangalore1",
-              "is_selected": false
-            },
-            {
-              "location_id": 6,
-              "location_name": "Mangalore2",
-              "is_selected": false
-            }
-          ]
-        },
-        {
-          "city_id": 4,
-          "city_name": "Manipal",
-          "is_selected": false,
-          "locations": [
-            {
-              "location_id": 7,
-              "location_name": "Manipal1",
-              "is_selected": false
-            },
-            {
-              "location_id": 8,
-              "location_name": "Manipal2",
-              "is_selected": false
-            }
-          ]
-        },
-        {
-          "city_id": 2,
-          "city_name": "Mysore",
-          "is_selected": false,
-          "locations": [
-            {
-              "location_id": 3,
-              "location_name": "Mysore1",
-              "is_selected": false
-            },
-            {
-              "location_id": 4,
-              "location_name": "Mysore2",
-              "is_selected": false
-            }
-          ]
-        },
-        {
-          "city_id": 5,
-          "city_name": "Udupi",
-          "is_selected": false,
-          "locations": [
-            {
-              "location_id": 9,
-              "location_name": "Udupi1",
-              "is_selected": false
-            },
-            {
-              "location_id": 10,
-              "location_name": "Udupi2",
+              "location_id": 604,
+              "location_name": "Fatorda",
               "is_selected": false
             }
           ]
