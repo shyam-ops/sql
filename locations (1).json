@@ -1,0 +1,335 @@
+{
+  "location": [
+    {
+      "state_id": 1,
+      "name": "Karnataka",
+      "is_selected": false,
+      "cities": [
+        {
+          "city_id": 1,
+          "city_name": "Bangalore",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 1,
+              "location_name": "Indiranagar",
+              "is_selected": false
+            },
+            {
+              "location_id": 13,
+              "location_name": "KFC signal",
+              "is_selected": false
+            },
+            {
+              "location_id": 2,
+              "location_name": "Koramangala",
+              "is_selected": false
+            },
+            {
+              "location_id": 12,
+              "location_name": "sharon",
+              "is_selected": false
+            },
+            {
+              "location_id": 11,
+              "location_name": "Testing",
+              "is_selected": false
+            }
+          ]
+        },
+        {
+          "city_id": 10,
+          "city_name": "Bangalore Airport",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 16,
+              "location_name": "Hawai Adda",
+              "is_selected": false
+            }
+          ]
+        },
+        {
+          "city_id": 3,
+          "city_name": "Mangalore",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 15,
+              "location_name": "Kempegowda 2",
+              "is_selected": false
+            },
+            {
+              "location_id": 5,
+              "location_name": "Mangalore1",
+              "is_selected": false
+            },
+            {
+              "location_id": 6,
+              "location_name": "Mangalore2",
+              "is_selected": false
+            }
+          ]
+        },
+        {
+          "city_id": 4,
+          "city_name": "Manipal",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 7,
+              "location_name": "Manipal1",
+              "is_selected": false
+            },
+            {
+              "location_id": 8,
+              "location_name": "Manipal2",
+              "is_selected": false
+            }
+          ]
+        },
+        {
+          "city_id": 2,
+          "city_name": "Mysore",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 3,
+              "location_name": "Mysore1",
+              "is_selected": false
+            },
+            {
+              "location_id": 4,
+              "location_name": "Mysore2",
+              "is_selected": false
+            }
+          ]
+        },
+        {
+          "city_id": 5,
+          "city_name": "Udupi",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 9,
+              "location_name": "Udupi1",
+              "is_selected": false
+            },
+            {
+              "location_id": 10,
+              "location_name": "Udupi2",
+              "is_selected": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "state_id": 2,
+      "name": "Maharashtra",
+      "is_selected": false,
+      "cities": [
+        {
+          "city_id": 21,
+          "city_name": "Mumbai",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 201,
+              "location_name": "Andheri",
+              "is_selected": false
+            },
+            {
+              "location_id": 202,
+              "location_name": "Bandra",
+              "is_selected": false
+            }
+          ]
+        },
+        {
+          "city_id": 22,
+          "city_name": "Pune",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 203,
+              "location_name": "Hinjewadi",
+              "is_selected": false
+            },
+            {
+              "location_id": 204,
+              "location_name": "Kothrud",
+              "is_selected": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "state_id": 3,
+      "name": "Tamil Nadu",
+      "is_selected": false,
+      "cities": [
+        {
+          "city_id": 31,
+          "city_name": "Chennai",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 301,
+              "location_name": "T Nagar",
+              "is_selected": false
+            },
+            {
+              "location_id": 302,
+              "location_name": "Velachery",
+              "is_selected": false
+            }
+          ]
+        },
+        {
+          "city_id": 32,
+          "city_name": "Coimbatore",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 303,
+              "location_name": "Gandhipuram",
+              "is_selected": false
+            },
+            {
+              "location_id": 304,
+              "location_name": "Peelamedu",
+              "is_selected": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "state_id": 4,
+      "name": "Kerala",
+      "is_selected": false,
+      "cities": [
+        {
+          "city_id": 41,
+          "city_name": "Kochi",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 401,
+              "location_name": "Edappally",
+              "is_selected": false
+            },
+            {
+              "location_id": 402,
+              "location_name": "Fort Kochi",
+              "is_selected": false
+            }
+          ]
+        },
+        {
+          "city_id": 42,
+          "city_name": "Thiruvananthapuram",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 403,
+              "location_name": "Kazhakkoottam",
+              "is_selected": false
+            },
+            {
+              "location_id": 404,
+              "location_name": "Pattom",
+              "is_selected": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "state_id": 5,
+      "name": "Telangana",
+      "is_selected": false,
+      "cities": [
+        {
+          "city_id": 51,
+          "city_name": "Hyderabad",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 501,
+              "location_name": "Madhapur",
+              "is_selected": false
+            },
+            {
+              "location_id": 502,
+              "location_name": "Gachibowli",
+              "is_selected": false
+            }
+          ]
+        },
+        {
+          "city_id": 52,
+          "city_name": "Warangal",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 503,
+              "location_name": "Hanamkonda",
+              "is_selected": false
+            },
+            {
+              "location_id": 504,
+              "location_name": "Kazipet",
+              "is_selected": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "state_id": 6,
+      "name": "Goa",
+      "is_selected": false,
+      "cities": [
+        {
+          "city_id": 61,
+          "city_name": "Panaji",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 601,
+              "location_name": "Miramar",
+              "is_selected": false
+            },
+            {
+              "location_id": 602,
+              "location_name": "Dona Paula",
+              "is_selected": false
+            }
+          ]
+        },
+        {
+          "city_id": 62,
+          "city_name": "Margao",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 603,
+              "location_name": "Colva",
+              "is_selected": false
+            },
+            {
+              "location_id": 604,
+              "location_name": "Fatorda",
+              "is_selected": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "message": "Locations available",
+  "status": 200
+}
