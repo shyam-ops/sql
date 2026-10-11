@@ -1,0 +1,130 @@
+{
+  "location": [
+    {
+      "state_id": 1,
+      "name": "Karnataka",
+      "is_selected": false,
+      "cities": [
+        {
+          "city_id": 1,
+          "city_name": "Bangalore",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 1,
+              "location_name": "Indiranagar",
+              "is_selected": false
+            },
+            {
+              "location_id": 13,
+              "location_name": "KFC signal",
+              "is_selected": false
+            },
+            {
+              "location_id": 2,
+              "location_name": "Koramangala",
+              "is_selected": false
+            },
+            {
+              "location_id": 12,
+              "location_name": "sharon",
+              "is_selected": false
+            },
+            {
+              "location_id": 11,
+              "location_name": "Testing",
+              "is_selected": false
+            }
+          ]
+        },
+        {
+          "city_id": 10,
+          "city_name": "Bangalore Airport",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 16,
+              "location_name": "Hawai Adda",
+              "is_selected": false
+            }
+          ]
+        },
+        {
+          "city_id": 3,
+          "city_name": "Mangalore",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 15,
+              "location_name": "Kempegowda 2",
+              "is_selected": false
+            },
+            {
+              "location_id": 5,
+              "location_name": "Mangalore1",
+              "is_selected": false
+            },
+            {
+              "location_id": 6,
+              "location_name": "Mangalore2",
+              "is_selected": false
+            }
+          ]
+        },
+        {
+          "city_id": 4,
+          "city_name": "Manipal",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 7,
+              "location_name": "Manipal1",
+              "is_selected": false
+            },
+            {
+              "location_id": 8,
+              "location_name": "Manipal2",
+              "is_selected": false
+            }
+          ]
+        },
+        {
+          "city_id": 2,
+          "city_name": "Mysore",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 3,
+              "location_name": "Mysore1",
+              "is_selected": false
+            },
+            {
+              "location_id": 4,
+              "location_name": "Mysore2",
+              "is_selected": false
+            }
+          ]
+        },
+        {
+          "city_id": 5,
+          "city_name": "Udupi",
+          "is_selected": false,
+          "locations": [
+            {
+              "location_id": 9,
+              "location_name": "Udupi1",
+              "is_selected": false
+            },
+            {
+              "location_id": 10,
+              "location_name": "Udupi2",
+              "is_selected": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "message": "Locations available",
+  "status": 200
+}
